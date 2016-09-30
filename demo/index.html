@@ -18,29 +18,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </head>
   <body unresolved>
 
-    <p>An example of <code>&lt;ac-loader&gt;</code>:</p>
+   
 
-    <p>Make words! <button id="saybtn">Say Something</button></p>
-    <p>Make lasers! <button id="laserbtn">Fire lasers</button></p>
+    <ac-loader small>Loading a small thing
+    </ac-loader>
 
-    <ac-loader author='{"name": "Lord Meowser", "image": "http://lorempixel.com/g/300/200/cats/"}' fancy>
-      <h2>Hello ac-loader</h2>
+    <ac-loader>Loading a normal thing
     </ac-loader>
 
     <script>
-      var seedElement = document.querySelector('ac-loader');
+      // var seedElement = document.querySelector('locals-loader');
 
-      document.querySelector('#saybtn').addEventListener('click', function() {
-        alert(seedElement.sayHello('Hallo!'));
-      });
+      // document.querySelector('#saybtn').addEventListener('click', function() {
+      //   alert(seedElement.sayHello('Hallo!'));
+      // });
 
-      document.querySelector('#laserbtn').addEventListener('click', function() {
-        seedElement.fireLasers();
-      });
+      // document.querySelector('#laserbtn').addEventListener('click', function() {
+      //   seedElement.fireLasers();
+      // });
 
-      document.addEventListener("ac-loader-lasers", function(e) {
-        console.log(e.detail.sound);
-      });
+      // document.addEventListener("locals-loader-lasers", function(e) {
+      //   console.log(e.detail.sound);
+      // });
 
     </script>
 

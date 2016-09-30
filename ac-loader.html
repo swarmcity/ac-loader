@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../ac-style/ac-style.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -31,26 +33,195 @@ Example:
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
+        position: relative;
+
         box-sizing: border-box;
+        color:var(--ac-red);
+        @apply(--layout-vertical);
+        @apply(--layout-center);
       }
 
-      .author img {
-        display: block;
-        float: left;
-        margin-right: 5px;
-        max-height: 100px;
-        max-width: 100px;
+      :host([small]) {
+        @apply(--layout-horizontal);
+        @apply(--layout-end);
       }
+
+
+
+      .canvas {
+        @apply(--ac-canvas);
+      }
+
+     .wide {
+        width:100%;
+      }
+
+     .whitespace {
+      height: 20px;
+     }
+      h1 {
+      @apply(--montserrat-light);
+      -webkit-margin-before:7px;
+      -webkit-margin-after:7px;
+      -webkit-margin-start:0em;
+      -webkit-margin-end:0em;
+      margin: 7px 0px 7px 0px;
+      padding: 0px;
+      font-size: 40px;
+      line-height: 52px;
+      }
+      h2 {
+       @apply(--ac-font-h2);
+      }
+      h3 {
+       @apply(--ac-font-h3);
+      }
+      h4 {
+       @apply(--ac-font-h4);
+      }
+      p {
+       @apply(--ac-font-body1);
+      }
+      small {
+       @apply(--ac-font-small);
+       color: rgba(0,0,0,0.75);
+      }
+
+      @-webkit-keyframes loadanimation {
+        0% {
+          -webkit-transform: scale(1);
+          opacity: 0.2;
+          }
+        25% {
+          -webkit-transform: scale(1.5);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: scale(1);
+          opacity: 0.2;
+        }
+        100% {
+          -webkit-transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      @-moz-keyframes loadanimation {
+        0% {
+          -moz-transform: scale(1);
+          opacity: 0.2;
+          }
+        25% {
+          -moz-transform: scale(1.5);
+          opacity: 1;
+        }
+        50% {
+          -moz-transform: scale(1);
+          opacity: 0.2;
+        }
+        100% {
+          -moz-transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      @keyframes loadanimation {
+        0% {
+          transform: scale(1);
+          opacity: 0.2;
+          }
+        25% {
+          transform: scale(1.5);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1);
+          opacity: 0.2;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0;
+        } 
+      }
+
+
+    #bigpoints {
+      margin: 10px 0px 7px 0px;
+      box-sizing: border-box;
+      padding: 12px;
+      @apply(--layout-horizontal);
+      @apply(--layout-end);
+      }
+
+
+    .bigpoint {
+      margin: 0px 7px 0px 7px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--ac-red);
+    }
+
+
+    #smallpoints {
+      @apply(--layout-horizontal);
+      margin: 2px 0px 2px 0px;
+      box-sizing: border-box;
+      padding: 4px;
+      @apply(--layout-horizontal);
+      @apply(--layout-end);     
+      }
+
+
+    .smallpoint {
+      margin: 0px 3px 0px 3px;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background-color: var(--ac-red);
+    }
+
+
+    #point1 {
+      -webkit-animation: loadanimation 1.5s linear 0s infinite;
+      -moz-animation: loadanimation 1.5s linear 0s infinite;
+      animation: loadanimation 1.5s linear 0s infinite;
+      }
+
+
+    #point2 {
+      -webkit-animation: loadanimation 1.5s linear 0.3s infinite;
+      -moz-animation: loadanimation 1.5s linear 0.3s infinite;
+      animation: loadanimation 1.5s linear 0.3s infinite;
+      }
+
+    #point3 {
+      -webkit-animation: loadanimation 1.5s linear 0.6s infinite;
+      -moz-animation: loadanimation 1.5s linear 0.6s infinite;
+      animation: loadanimation 1.5s linear 0.6s infinite;
+      }
+
     </style>
+    <template is="dom-if" if="{{!small}}">
+          <h1><content></content>
+          <div id="bigpoints">
+          <div class="bigpoint" id="point1"></div>
+          <div class="bigpoint" id="point2"></div>
+          <div class="bigpoint" id="point3"></div>
+          </div>
+          </h1>
+    </template>
+    <template is="dom-if" if="{{small}}">
+          <p><content></content>
+          <div id="smallpoints">
+          <div class="smallpoint" id="point1"></div>
+          <div class="smallpoint" id="point2"></div>
+          <div class="smallpoint" id="point3"></div>
+          </div>
+          </p>
+    </template>
 
-    <h1>&lt;ac-loader&gt;</h1>
-    <content></content>
-    <p class="author">
-      <img src$="{{author.image}}">
-      Cheers,<br/>
-      <span class="name">{{author.name}}</span>
-    </p>
   </template>
 
   <script>
@@ -62,32 +233,12 @@ Example:
          * `fancy` indicates that the element should don a monocle and tophat,
          * while checking its pocket watch.
          */
-        fancy: Boolean,
-
-        /**
-         * Describes the author of the element, but is really just an excuse to
-         * show off JSDoc annotations.
-         *
-         * @type {{name: string, image: string}}
-         */
-        author: {
-          type: Object,
-          // Use `value` to provide a default value for a property, by setting it
-          // on your element's prototype.
-          //
-          // If you provide a function, as we do here, Polymer will call that
-          // _per element instance_.
-          //
-          // We do that to ensure that each element gets its own copy of the
-          // value, rather than having it shared across all instances (via the
-          // prototype).
-          value: function() {
-            return {
-              name:  'Dimitri Glazkov',
-              image: 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg',
-            };
-          }
-        },
+        small: {
+          type: Boolean,
+          value: false,
+          observer: '_small'
+        }, 
+ 
       },
 
       // Element Lifecycle
@@ -117,35 +268,9 @@ Example:
         // Use this to clean up anything you did in `attached`.
       },
 
-      // Element Behavior
-
-      /**
-       * Sometimes it's just nice to say hi.
-       *
-       * @param {string} greeting A positive greeting.
-       * @return {string} The full greeting.
-       */
-      sayHello: function(greeting) {
-        var response = greeting || 'Hello World!';
-        return 'ac-loader says, ' + response;
-      },
-
-      /**
-       * The `ac-loader-lasers` event is fired whenever `fireLasers` is called.
-       *
-       * @event ac-loader-lasers
-       * @detail {{sound: String}}
-       */
-
-      /**
-       * Attempt to destroy this element's enemies with a beam of light!
-       *
-       * Or, at least, dispatch an event in the vain hope that someone else will
-       * do the zapping.
-       */
-      fireLasers: function() {
-        this.fire('ac-loader-lasers', {sound: 'Pew pew!'});
+      _small: function(){
       }
+
     });
   </script>
 </dom-module>
