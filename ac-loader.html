@@ -37,7 +37,7 @@ Example:
         position: relative;
 
         box-sizing: border-box;
-        color:var(--ac-red);
+        --main-color: var(--ac-red);
         @apply(--layout-vertical);
         @apply(--layout-center);
       }
@@ -70,6 +70,8 @@ Example:
       padding: 0px;
       font-size: 40px;
       line-height: 52px;
+
+        color:var(--main-color);
       }
       h2 {
        @apply(--ac-font-h2);
@@ -82,6 +84,8 @@ Example:
       }
       p {
        @apply(--ac-font-body1);
+        color:var(--main-color);
+
       }
       small {
        @apply(--ac-font-small);
@@ -160,7 +164,7 @@ Example:
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background-color: var(--ac-red);
+      background-color: var(--main-color);
     }
 
 
@@ -179,7 +183,7 @@ Example:
       width: 2px;
       height: 2px;
       border-radius: 50%;
-      background-color: var(--ac-red);
+      background-color: var(--main-color);
     }
 
 
@@ -238,7 +242,10 @@ Example:
           value: false,
           observer: '_small'
         }, 
- 
+        color: {
+          type: String,
+          observer: '_color'
+        } 
       },
 
       // Element Lifecycle
@@ -269,6 +276,14 @@ Example:
       },
 
       _small: function(){
+
+      },
+
+      _color: function(){
+        var colorz = 'var(--ac-' + this.color + ')';
+        this.customStyle['--main-color'] = colorz;
+        this.updateStyles();        
+
       }
 
     });
